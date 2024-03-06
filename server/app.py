@@ -32,7 +32,7 @@ def get_users():
 def get_journal_entries():
     journal_entries = JournalEntry.query.all()
     if request.method == 'GET':
-        journal_entries_dict = [journal_entry.to_dict(rules = ('-user', '-entry_tags')) for journal_entry in journal_entries]
+        journal_entries_dict = [journal_entry.to_dict(rules = ('-entry_tags',)) for journal_entry in journal_entries]
         response = make_response(
             journal_entries_dict, 200
         )
@@ -62,11 +62,7 @@ def delete_journal_entry(id):
             db.session.delete(journal_entry)
             db.session.commit()
             response = make_response({}, 204)
-        elif request.method == 'PATCH':
-            journal_entry.title = request.json['title']
-            journal_entry.content = request.json['content']
-            db.session.commit()
-            response = make_response(journal_entry.to_dict(rules = ('-user', '-entry_tags')), 200)
+        
         return response
     
 

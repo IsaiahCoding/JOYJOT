@@ -5,16 +5,16 @@ from config import db
 
 # Models go here!
 
-class User(db.Model,SerializerMixin):
+class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     #relationships: 
     journal_entries = db.relationship('JournalEntry', back_populates = 'user')
     #serialization rules:
-    serializer_rules = ('-journal_entries.user',)
+    serialize_rules = ('-journal_entries.user',)
 
-class JournalEntry(db.Model,SerializerMixin):
+class JournalEntry(db.Model, SerializerMixin):
     __tablename__ = 'journal_entries'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -25,9 +25,10 @@ class JournalEntry(db.Model,SerializerMixin):
     user = db.relationship('User', back_populates = 'journal_entries')
     entry_tags = db.relationship('EntryTag', back_populates = 'journal_entry')
     #serialization rules:
-    serializer_rules = ('-user.journal_entries', '-entry_tags.journal_entry')
+    serialize_rules = ('-user.journal_entries', '-entry_tags.journal_entry', '-entry_tags.journal_tag',
+                        '-entry_tags.journal_entry.user')
     
-class JournalTag(db.Model,SerializerMixin):
+class JournalTag(db.Model, SerializerMixin):
     __tablename__ = 'journal_tags'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -36,7 +37,7 @@ class JournalTag(db.Model,SerializerMixin):
     entry_tags = db.relationship('EntryTag', back_populates ='journal_tag')
     
     #serialization rules:
-    serializer_rules = ('-entry_tags.journal_tag',)
+    serialize_rules = ('-entry_tags.journal_tag', '-entry_tags.journal_entry', '-entry_tags.journal_entry.user')
 
 class EntryTag(db.Model, SerializerMixin):
     __tablename__ = 'entry_tags'
@@ -50,4 +51,4 @@ class EntryTag(db.Model, SerializerMixin):
     journal_entry = db.relationship('JournalEntry', back_populates = 'entry_tags')
     journal_tag = db.relationship('JournalTag', back_populates = 'entry_tags')
     #serialization rules:
-    serializer_rules = ('-journal_entry.entry_tags', '-journal_tag.entry_tags')
+    serialize_rules = ('-journal_entry.entry_tags', '-journal_tag.entry_tags')
