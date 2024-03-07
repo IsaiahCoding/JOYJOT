@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response
+from flask import Flask, request, make_response, jsonify
 from flask_restful import Resource
 
 # Local imports
@@ -32,18 +32,32 @@ def get_users():
 def journal_entries():
     if request.method == 'GET':
         journal_entries = JournalEntry.query.all()
-        journal_entries_dict = [entry.to_dict(rules=('-entry_tags',)) for entry in journal_entries]
+        journal_entries_dict = [entry.to_dict(rules=('-entry_tags.journal_tag',)) for entry in journal_entries]
         response = make_response(jsonify(journal_entries_dict), 200)
     elif request.method == 'POST':
         data = request.get_json()
+        
+        # Create a new JournalEntry
         new_journal_entry = JournalEntry(
             title=data.get('title', ''),
             content=data.get('content', ''),
             user_id=data.get('user_id', None)
         )
+        
+        # Create a new JournalTag or get an existing one
+        tag_name = data.get('tags', '')
+        journal_tag = JournalTag.query.filter_by(name=tag_name).first()
+        if not journal_tag:
+            journal_tag = JournalTag(name=tag_name)
+            db.session.add(journal_tag)
+        
+        # Create a new EntryTag linking the JournalEntry and JournalTag
+        entry_tag = EntryTag(journal_entry=new_journal_entry, journal_tag=journal_tag)
+        db.session.add(entry_tag)
+        
         db.session.add(new_journal_entry)
         db.session.commit()
-        response = make_response(new_journal_entry.to_dict(rules=('-user', '-entry_tags')), 201)
+        response = make_response(new_journal_entry.to_dict(rules=('-user', '-entry_tags.journal_tag')), 201)
     return response
 
 @app.route('/journal_entries/<int:id>', methods = ['GET', 'DELETE', 'PATCH'])
