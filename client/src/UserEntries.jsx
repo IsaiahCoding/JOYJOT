@@ -2,35 +2,55 @@ import React, { useEffect, useState } from "react";
 
 function UserEntries() {
   const [journalEntries, setJournalEntries] = useState([]);
+  const [editEntry, setEditEntry] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/journal_entries")
+    fetch("/journal_entries")
       .then((r) => r.json())
       .then(setJournalEntries);
   }, []);
 
-  const handleEdit = (entryId) => {
-    // Handle the edit action, e.g., navigate to an edit page or show a modal
-    console.log(`Edit entry with ID: ${entryId}`);
+  const handleEditClick = (entryId) => {
+    fetch(`/journal_entries/${entryId}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setEditEntry(data);
+      });
   };
 
-  const handleDelete = (entryId) => {
-    // Handle the delete action, e.g., send a DELETE request to the backend
-    fetch(`http://127.0.0.1:5555/journal_entries/${entryId}`, {
-      method: "DELETE",
+  const handleCancelEdit = () => {
+    setEditEntry(null);
+  };
+
+  const handleEditChange = (e) => {
+    setEditEntry({
+      ...editEntry,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSaveEdit = () => {
+    fetch(`/journal_entries/${editEntry.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: editEntry.title,
+        content: editEntry.content,
+      }),
     })
-      .then((response) => {
-        if (response.ok) {
-          // Remove the deleted entry from the state
-          setJournalEntries((entries) =>
-            entries.filter((entry) => entry.id !== entryId)
-          );
-        } else {
-          console.error("Failed to delete entry");
-        }
+      .then((r) => r.json())
+      .then((updatedEntry) => {
+        setJournalEntries((entries) =>
+          entries.map((entry) =>
+            entry.id === updatedEntry.id ? updatedEntry : entry
+          )
+        );
+        setEditEntry(null);
       })
       .catch((error) => {
-        console.error("Error during deletion:", error);
+        console.error("Error during entry update:", error);
       });
   };
 
@@ -40,14 +60,36 @@ function UserEntries() {
       <ul>
         {journalEntries.map((entry) => (
           <li key={entry.id}>
-            <p>
-              {entry.title} - {entry.content}
-            </p>
-            <button onClick={() => handleEdit(entry.id)}>Edit</button>
-            <button onClick={() => handleDelete(entry.id)}>Delete</button>
+            {entry.title} - {entry.content}
+            <button onClick={() => handleEditClick(entry.id)}>Edit</button>
           </li>
         ))}
       </ul>
+      {editEntry && (
+        <div>
+          <h3>Edit Entry</h3>
+          <label>
+            Title:
+            <input
+              type="text"
+              name="title"
+              value={editEntry.title}
+              onChange={handleEditChange}
+            />
+          </label>
+          <label>
+            Content:
+            <input
+              type="text"
+              name="content"
+              value={editEntry.content}
+              onChange={handleEditChange}
+            />
+          </label>
+          <button onClick={handleSaveEdit}>Save</button>
+          <button onClick={handleCancelEdit}>Cancel</button>
+        </div>
+      )}
     </div>
   );
 }

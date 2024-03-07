@@ -60,23 +60,27 @@ def journal_entries():
         response = make_response(new_journal_entry.to_dict(rules=('-user', '-entry_tags.journal_tag')), 201)
     return response
 
-@app.route('/journal_entries/<int:id>', methods = ['GET', 'DELETE', 'PATCH'])
-def delete_journal_entry(id):
-    journal_entry = JournalEntry.query.filter(JournalEntry.id == id).first()
-    
+@app.route('/journal_entries/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def get_or_update_journal_entry(id):
+    journal_entry = JournalEntry.query.get(id)
+
     if not journal_entry:
-        return make_response(
-            {'message': 'Journal Entry not found'}, 404
-        )
-    else:
-        if request.method == 'GET':
-            response = make_response(journal_entry.to_dict(rules = ('-user', '-entry_tags')), 200)
-        elif request.method == 'DELETE':
-            db.session.delete(journal_entry)
-            db.session.commit()
-            response = make_response({}, 204)
-        
-        return response
+        return make_response({'message': 'Journal Entry not found'}, 404)
+
+    if request.method == 'GET':
+        response = make_response(journal_entry.to_dict(rules=('-user', '-entry_tags')), 200)
+    elif request.method == 'PATCH':
+        data = request.get_json()
+        journal_entry.title = data.get('title', journal_entry.title)
+        journal_entry.content = data.get('content', journal_entry.content)
+        db.session.commit()
+        response = make_response(journal_entry.to_dict(rules=('-user', '-entry_tags')), 200)
+    elif request.method == 'DELETE':
+        db.session.delete(journal_entry)
+        db.session.commit()
+        response = make_response({}, 204)
+
+    return response
     
 
 
