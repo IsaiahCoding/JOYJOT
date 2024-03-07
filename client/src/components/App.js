@@ -12,11 +12,12 @@ function App() {
       <header>
         
         <Header />
+        <img src={logoUrl} alt="JoyJot Logo" className="logo" />
       </header>
 
       <main>
 
-        <img src={logoUrl} alt="JoyJot Logo" className="logo" />
+        
       </main>
     </div>
   );
