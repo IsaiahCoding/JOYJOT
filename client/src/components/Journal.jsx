@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-
+import "/Users/isaiahaguilera/Development/code/phase-4/Isaiah-Phase-4-Project/client/src/components/Journal.css"
 function Journal() {
   const formik = useFormik({
     initialValues: {
@@ -8,6 +8,7 @@ function Journal() {
       Entry: "",
       Tags: "",
       Mood: "",
+      Date: "",  
     },
     validate: (values) => {
       const errors = {};
@@ -28,6 +29,10 @@ function Journal() {
         errors.Mood = "Mood is required";
       }
 
+      if (!values.Date) {
+        errors.Date = "Date is required";
+      }
+
       return errors;
     },
     onSubmit: async (values) => {
@@ -42,6 +47,7 @@ function Journal() {
             content: values.Entry,
             Tags: values.Tags,
             Mood: values.Mood,
+            Date: values.Date,  
             user_id: 1,
           }),
         });
@@ -93,6 +99,11 @@ function Journal() {
             <option value="Bittersweet">Bittersweet</option>
           </select>
           {formik.errors.Mood && <div>{formik.errors.Mood}</div>}
+        </label>
+        <label>
+          Date:
+          <input type="date" name="Date" onChange={formik.handleChange} value={formik.values.Date} />
+          {formik.errors.Date && <div>{formik.errors.Date}</div>}
         </label>
         <button type="submit">Submit</button>
       </form>

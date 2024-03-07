@@ -15,7 +15,7 @@ function App() {
       </header>
 
       <main>
-        {/* Your main content goes here */}
+
         <img src={logoUrl} alt="JoyJot Logo" className="logo" />
       </main>
     </div>

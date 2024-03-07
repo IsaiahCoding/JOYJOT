@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import "/Users/isaiahaguilera/Development/code/phase-4/Isaiah-Phase-4-Project/client/src/UserEntry.css"
 function UserEntries() {
   const [journalEntries, setJournalEntries] = useState([]);
   const [editEntry, setEditEntry] = useState(null);
@@ -42,13 +42,13 @@ function UserEntries() {
     })
       .then((r) => r.json())
       .then((updatedEntry) => {
-        // Update the local state with the edited entry
+       
         setJournalEntries((entries) =>
           entries.map((entry) =>
             entry.id === updatedEntry.id ? updatedEntry : entry
           )
         );
-        // Reset the edit form
+        // 
         setEditEntry(null);
       });
   };
@@ -60,7 +60,7 @@ function UserEntries() {
     })
       .then((r) => {
         if (r.ok) {
-          // Remove the deleted entry from the local state
+          
           setJournalEntries((entries) =>
             entries.filter((entry) => entry.id !== entryId)
           );
@@ -76,10 +76,10 @@ function UserEntries() {
   return (
     <div>
       <h2>Journal Entries</h2>
-      <ul>
+      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
         {journalEntries.map((entry) => (
           <li key={entry.id}>
-            {entry.title} - {entry.content}
+            {entry.title} - {entry.content} - {entry.date}
             <button onClick={() => handleEditClick(entry.id)}>Edit</button>
             <button onClick={() => handleDeleteClick(entry.id)}>Delete</button>
           </li>

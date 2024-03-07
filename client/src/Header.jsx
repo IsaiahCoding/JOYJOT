@@ -10,13 +10,21 @@ function Header() {
   return (
     <Router>
       <>
-        <Link to="/">Home</Link>
-        <Link to="/journal">Journal</Link>
-        <Link to="/user">User Journal</Link>
+        <div>
+          <Link to="/">Home</Link>
+        </div>
+        
+        <div>
+          <Link to="/journal">Journal</Link>
+        </div>
+
+        <div>
+          <Link to="/user">User Journal</Link>
+        </div>
 
         <Switch>
           <Route path="/journal" component={Journal} />
-            <Route path="/user" component={UserEntries} />
+          <Route path="/user" component={UserEntries} />
         </Switch>
       </>
     </Router>

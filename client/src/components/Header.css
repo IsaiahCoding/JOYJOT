@@ -1,22 +1,20 @@
-/* Header.css */
 
-/* Style for the header */
 .header {
     
     color: white;
-    padding: 20px;
+    padding: 200px;
     text-align: center;
-    font-family: 'Your Custom Font', sans-serif; /* Replace 'Your Custom Font' with the desired font name */
+    font-family: Ariel, sans-serif;
   }
   
-  /* Style for navigation links */
+
   .nav-link {
     color: white;
     margin: 0 10px;
     text-decoration: none;
   }
   
-  /* Remove default link highlighting */
+
   .nav-link:hover,
   .nav-link:focus,
   .nav-link:active {
