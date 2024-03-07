@@ -90,7 +90,7 @@ def get_journal_tags():
         data = request.get_json()
 
         new_journal_tag = JournalTag(
-            name=data.get('Tags', '')  # Extract the tag name correctly
+            name=data.get('Tags', '')  
         )
         db.session.add(new_journal_tag)
         db.session.commit()
