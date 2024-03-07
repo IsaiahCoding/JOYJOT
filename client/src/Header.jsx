@@ -1,10 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Journal from "./components/Journal";
 
 function Header() {
   return (
-    <><button> Home </button>
-    <button>Journal</button>
-    <button> User</button></>
+    <Router>
+      <>
+        <Link to="/">Home</Link>
+        <Link to="/journal">Journal</Link>
+        <Link to="/user">User</Link>
+
+        <Switch>
+          <Route path="/journal" component={Journal} />
+          {/* Add more routes as needed */}
+        </Switch>
+      </>
+    </Router>
   );
 }
 
