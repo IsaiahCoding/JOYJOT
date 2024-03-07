@@ -1,0 +1,53 @@
+/* App.css */
+
+/* Reset some default styles for body and h1 */
+body, h1 {
+    margin: 0;
+    
+}
+
+/* Set the background color for the entire page */
+body {
+    
+    font-family: 'Your Custom Font', sans-serif; /* Replace 'Your Custom Font' with the desired font name */
+}
+
+/* Style the header */
+header {
+    background-color: rgb(255, 132, 31); 
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Your Custom Font', sans-serif;
+     /* Replace 'Your Custom Font' with the desired font name */
+}
+
+/* Style for the main content */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+/* Your additional styles go here */
+.logo {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px; /* Adjust as needed */
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 20px;
+}
+/* Add more styles as needed for your header and logo */
+

@@ -11,6 +11,7 @@ function UserEntries() {
   }, []);
 
   const handleEditClick = (entryId) => {
+    // Fetch data for the selected entry
     fetch(`/journal_entries/${entryId}`)
       .then((r) => r.json())
       .then((data) => {
@@ -23,6 +24,7 @@ function UserEntries() {
   };
 
   const handleEditChange = (e) => {
+    // Update the local state when editing
     setEditEntry({
       ...editEntry,
       [e.target.name]: e.target.value,
@@ -30,27 +32,44 @@ function UserEntries() {
   };
 
   const handleSaveEdit = () => {
+    // Send a PATCH request to update the entry on the server
     fetch(`/journal_entries/${editEntry.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        title: editEntry.title,
-        content: editEntry.content,
-      }),
+      body: JSON.stringify(editEntry),
     })
       .then((r) => r.json())
       .then((updatedEntry) => {
+        // Update the local state with the edited entry
         setJournalEntries((entries) =>
           entries.map((entry) =>
             entry.id === updatedEntry.id ? updatedEntry : entry
           )
         );
+        // Reset the edit form
         setEditEntry(null);
+      });
+  };
+
+  const handleDeleteClick = (entryId) => {
+    // Send a DELETE request to remove the entry on the server
+    fetch(`/journal_entries/${entryId}`, {
+      method: "DELETE",
+    })
+      .then((r) => {
+        if (r.ok) {
+          // Remove the deleted entry from the local state
+          setJournalEntries((entries) =>
+            entries.filter((entry) => entry.id !== entryId)
+          );
+        } else {
+          console.error("Failed to delete entry");
+        }
       })
       .catch((error) => {
-        console.error("Error during entry update:", error);
+        console.error("Error during deletion:", error);
       });
   };
 
@@ -62,6 +81,7 @@ function UserEntries() {
           <li key={entry.id}>
             {entry.title} - {entry.content}
             <button onClick={() => handleEditClick(entry.id)}>Edit</button>
+            <button onClick={() => handleDeleteClick(entry.id)}>Delete</button>
           </li>
         ))}
       </ul>

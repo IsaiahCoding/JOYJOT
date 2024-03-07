@@ -3,7 +3,7 @@ import React, { useEffect, useState, useReducer } from "react";
 const formReducer = (state, event) => {
   return {
     ...state,
-    [event.target.name]: event.target.value, // Use 'name' instead of 'placeholder'
+    [event.target.name]: event.target.value,
   };
 };
 
@@ -12,7 +12,8 @@ function Journal() {
   const [formData, setFormData] = useReducer(formReducer, {
     Title: "",
     Entry: "",
-    Tags: " ",
+    Tags: "",
+    Mood: "",
   });
 
   const handleSubmit = async (e) => {
@@ -26,7 +27,8 @@ function Journal() {
         body: JSON.stringify({
           title: formData.Title,
           content: formData.Entry,
-          tags: formData.Tags,
+          Tags: formData.Tags,  // Ensure the key matches the backend
+          Mood: formData.Mood,
           user_id: 1,
         }),
       });
@@ -34,7 +36,6 @@ function Journal() {
       if (response.ok) {
         setSubmit(true);
       } else {
-        // Handle error
         console.error('Submission failed');
       }
     } catch (error) {
@@ -55,10 +56,10 @@ function Journal() {
     <div className="journal">
       <h2>Journal Entry</h2>
       <div>
-        Your Entry:
         <p>Title: {formData.Title}</p>
         <p>Entry: {formData.Entry}</p>
-        <p>Tag: {formData.Tags}</p> 
+        <p>Tag: {formData.Tags}</p>
+        <p>Mood: {formData.Mood}</p>
       </div>
       <form onSubmit={handleSubmit}>
         <label>
@@ -68,14 +69,25 @@ function Journal() {
           <input type="text" name="Entry" placeholder="Entry" onChange={handleChange} />
         </label>
         <label>
-          
+          Tags:
           <select name="Tags" onChange={handleChange} value={formData.Tags}>
+            <option value="">Select Tag</option>
             <option value="Family">Family</option>
             <option value="Food">Food</option>
             <option value="Travel">Travel</option>
             <option value="Adventure">Adventure</option>
             <option value="Fun">Fun</option>
-            
+          </select>
+        </label>
+        <label>
+          Mood:
+          <select name="Mood" onChange={handleChange} value={formData.Mood}>
+            <option value="">Select Mood</option>
+            <option value="Happy">Happy</option>
+            <option value="Joyful">Joyful</option>
+            <option value="Proud">Proud</option>
+            <option value="Content">Content</option>
+            <option value="Bittersweet">Bittersweet</option>
           </select>
         </label>
         <button type="submit">Submit</button>
