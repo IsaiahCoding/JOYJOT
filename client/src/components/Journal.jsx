@@ -18,7 +18,7 @@ function Journal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://127.0.0.1:5555/journal_entries', {
+      const response = await fetch('/journal_entries', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

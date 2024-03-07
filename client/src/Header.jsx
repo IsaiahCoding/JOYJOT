@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Journal from "./components/Journal";
+import UserEntries from "./UserEntries";
 
 
 
@@ -14,6 +15,7 @@ function Header() {
 
         <Switch>
           <Route path="/journal" component={Journal} />
+            <Route path="/user" component={UserEntries} />
         </Switch>
       </>
     </Router>
