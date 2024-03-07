@@ -22,7 +22,11 @@ function Journal() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          title: formData.Title,
+          content: formData.Entry,
+          user_id: 1, // Update this with the actual user ID if applicable
+        }),
       });
 
       if (response.ok) {
