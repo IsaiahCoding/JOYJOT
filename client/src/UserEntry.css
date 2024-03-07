@@ -1,4 +1,4 @@
-/* Reset some default styles */
+
 body, h1, h2, p {
     margin: 0;
     padding: 0;
@@ -52,22 +52,21 @@ body, h1, h2, p {
     padding: 20px;
     text-align: center;
   }
-  
-  /* Flexbox example */
+ 
   .flex-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   
-  /* Grid example */
+ 
   .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
   
-  /* Responsive Design */
+
   @media screen and (max-width: 768px) {
     .container {
       padding: 10px;

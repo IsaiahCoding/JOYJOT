@@ -42,13 +42,13 @@ function UserEntries() {
     })
       .then((r) => r.json())
       .then((updatedEntry) => {
-        // Update the local state with the edited entry
+       
         setJournalEntries((entries) =>
           entries.map((entry) =>
             entry.id === updatedEntry.id ? updatedEntry : entry
           )
         );
-        // Reset the edit form
+        // 
         setEditEntry(null);
       });
   };
@@ -60,7 +60,7 @@ function UserEntries() {
     })
       .then((r) => {
         if (r.ok) {
-          // Remove the deleted entry from the local state
+          
           setJournalEntries((entries) =>
             entries.filter((entry) => entry.id !== entryId)
           );

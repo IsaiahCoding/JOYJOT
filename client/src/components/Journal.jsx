@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-
+import "/Users/isaiahaguilera/Development/code/phase-4/Isaiah-Phase-4-Project/client/src/components/Journal.css"
 function Journal() {
   const formik = useFormik({
     initialValues: {
@@ -8,7 +8,7 @@ function Journal() {
       Entry: "",
       Tags: "",
       Mood: "",
-      Date: "",  // Add Date field to initialValues
+      Date: "",  
     },
     validate: (values) => {
       const errors = {};
@@ -47,7 +47,7 @@ function Journal() {
             content: values.Entry,
             Tags: values.Tags,
             Mood: values.Mood,
-            Date: values.Date,  // Include Date in the submitted data
+            Date: values.Date,  
             user_id: 1,
           }),
         });

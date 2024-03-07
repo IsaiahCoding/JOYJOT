@@ -1,0 +1,57 @@
+/* journal.css */
+
+body {
+    
+    margin: 0;
+    font-family: Arial, sans-serif;
+    
+  }
+  
+  .journal {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  input,
+  select {
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 5px;
+  }
+  
+  .success {
+    color: green;
+    margin-top: 5px;
+  }
+  
