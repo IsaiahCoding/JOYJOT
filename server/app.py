@@ -29,22 +29,21 @@ def get_users():
     return response
 
 @app.route('/journal_entries', methods=['GET', 'POST'])
-def get_journal_entries():
-    journal_entries = JournalEntry.query.all()
+def journal_entries():
     if request.method == 'GET':
-        journal_entries_dict = [journal_entry.to_dict(rules = ('-entry_tags',)) for journal_entry in journal_entries]
-        response = make_response(
-            journal_entries_dict, 200
-        )
+        journal_entries = JournalEntry.query.all()
+        journal_entries_dict = [entry.to_dict(rules=('-entry_tags',)) for entry in journal_entries]
+        response = make_response(jsonify(journal_entries_dict), 200)
     elif request.method == 'POST':
+        data = request.get_json()
         new_journal_entry = JournalEntry(
-            title=request.json['title'],
-            content=request.json['content'],
-            user_id=request.json['user_id']
+            title=data.get('title', ''),
+            content=data.get('content', ''),
+            user_id=data.get('user_id', None)
         )
         db.session.add(new_journal_entry)
         db.session.commit()
-        response = make_response (new_journal_entry.to_dict(rules = ('-user', '-entry_tags')),201)
+        response = make_response(new_journal_entry.to_dict(rules=('-user', '-entry_tags')), 201)
     return response
 
 @app.route('/journal_entries/<int:id>', methods = ['GET', 'DELETE', 'PATCH'])

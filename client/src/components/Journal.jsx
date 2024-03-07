@@ -10,15 +10,31 @@ const formReducer = (state, event) => {
 function Journal() {
   const [submit, setSubmit] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
-    Title: "", 
-    Entry: "", 
+    Title: "",
+    Entry: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmit(true);
-  };
+    try {
+      const response = await fetch('http://127.0.0.1:5555/journal_entries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
+      if (response.ok) {
+        setSubmit(true);
+      } else {
+        // Handle error
+        console.error('Submission failed');
+      }
+    } catch (error) {
+      console.error('Error during submission:', error);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -34,8 +50,8 @@ function Journal() {
       <h2>Journal Entry</h2>
       <div>
         Your Entry:
-        <p>Title:{formData.Title}</p>
-        <p>Entry:{formData.Entry}</p>
+        <p>Title: {formData.Title}</p>
+        <p>Entry: {formData.Entry}</p>
       </div>
       <form onSubmit={handleSubmit}>
         <label>
