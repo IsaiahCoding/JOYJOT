@@ -5,7 +5,7 @@ A space for parents to joyfully jot down and cherish milestones and memories of 
 
 ## About
 
-JoyJoy provides a platform for parents to create personalized journal entries, capturing and cherishing memorable moments with the combination of text, photos, and videos.
+JoyJot provides a platform for parents to create personalized journal entries, capturing and cherishing memorable moments with the combination of text, photos, and videos.
 
 ## Software Stack
 
@@ -25,7 +25,7 @@ JoyJoy provides a platform for parents to create personalized journal entries, c
 
 ## Installation
 
-To set up the JoyJoy application, follow these steps:
+To set up the JoyJot application, follow these steps:
 
 1. Navigate to the server directory.
     ```bash
@@ -54,12 +54,12 @@ To set up the JoyJoy application, follow these steps:
     npm start
     ```
 
-   This will install the necessary dependencies, start the backend server, and launch the JoyJoy application.
+   This will install the necessary dependencies, start the backend server, and launch the JoyJot application.
 
   
 ## Contributing
 
-If you wish to contribute to JoyJoy, follow these guidelines:
+If you wish to contribute to JoyJot, follow these guidelines:
 
 1. Fork the repository.
 2. Create a new branch for your feature.
