@@ -1,0 +1,80 @@
+/* Reset some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Your Chosen Font', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: #f0f0f0;
+    color: #ffffff;
+  }
+  
+  h1, h2, h3 {
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  p {
+    letter-spacing: 0.5px;
+    color: #555;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #2980b9;
+  }
+  
+  .header {
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Flexbox example */
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Grid example */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  
+    .flex-container {
+      flex-direction: column;
+    }
+  }
+  
