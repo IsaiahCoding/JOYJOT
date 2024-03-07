@@ -37,21 +37,21 @@ def journal_entries():
     elif request.method == 'POST':
         data = request.get_json()
         
-        # Create a new JournalEntry
+        
         new_journal_entry = JournalEntry(
             title=data.get('title', ''),
             content=data.get('content', ''),
             user_id=data.get('user_id', None)
         )
         
-        # Create a new JournalTag or get an existing one
+        
         tag_name = data.get('tags', '')
         journal_tag = JournalTag.query.filter_by(name=tag_name).first()
         if not journal_tag:
             journal_tag = JournalTag(name=tag_name)
             db.session.add(journal_tag)
         
-        # Create a new EntryTag linking the JournalEntry and JournalTag
+       
         entry_tag = EntryTag(journal_entry=new_journal_entry, journal_tag=journal_tag)
         db.session.add(entry_tag)
         

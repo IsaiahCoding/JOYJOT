@@ -58,7 +58,7 @@ function Journal() {
         Your Entry:
         <p>Title: {formData.Title}</p>
         <p>Entry: {formData.Entry}</p>
-        <p>Tag: {formData.Tags}</p> {/* Display selected tags */}
+        <p>Tag: {formData.Tags}</p> 
       </div>
       <form onSubmit={handleSubmit}>
         <label>
@@ -68,14 +68,14 @@ function Journal() {
           <input type="text" name="Entry" placeholder="Entry" onChange={handleChange} />
         </label>
         <label>
-          {/* Add a Tags dropdown */}
+          
           <select name="Tags" onChange={handleChange} value={formData.Tags}>
-            <option value="tag1">Family</option>
-            <option value="tag2">Food</option>
-            <option value="tag3">Travel</option>
-            <option value="tag4">Adventure</option>
-            <option value="tag5">Fun</option>
-            {/* Add more options as needed */}
+            <option value="Family">Family</option>
+            <option value="Food">Food</option>
+            <option value="Travel">Travel</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Fun">Fun</option>
+            
           </select>
         </label>
         <button type="submit">Submit</button>
